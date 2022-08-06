@@ -133,7 +133,7 @@ def progress_bar(percentage):
 
 def get_readable_message():
     with download_dict_lock:
-        msg = f"𝗗𝗿𝗶𝗻𝗸𝗶𝗻𝗴 𝘀𝗼𝗺𝗲 𝗖𝗼𝗳𝗳𝗲𝗲 ☕️ 𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲 𝗜𝗻 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴"
+        msg = f"𝗗𝗿𝗶𝗻𝗸 𝘀𝗼𝗺𝗲 𝗖𝗼𝗳𝗳𝗲𝗲 ☕️ 𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲 𝗜𝗻 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
@@ -142,7 +142,7 @@ def get_readable_message():
                 globals()['COUNT'] -= STATUS_LIMIT
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
-            msg += f"<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
+            msg += f"\n<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
             msg += f"\n<b>⚡️ </b> <i>{download.status()}</i>\n<b>Connected - </b> {download.eng()}"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
@@ -176,7 +176,7 @@ def get_readable_message():
                     msg += f'\n<b>Request By </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
                 msg += f"\n<b>Bot Rest - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n<b>⦿ </b>{download.size()}"
-            msg += "\n\n"
+            msg += " "
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
         bmsg = f" "
