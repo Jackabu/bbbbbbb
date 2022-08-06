@@ -2,7 +2,7 @@ from re import match as re_match, findall as re_findall
 from threading import Thread, Event
 from time import time
 from math import ceil
-from html import escape
+from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 from requests import head as rhead
 from urllib.request import urlopen
 from telegram import InlineKeyboardMarkup
