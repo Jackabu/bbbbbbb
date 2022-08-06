@@ -114,13 +114,13 @@ def get_progress_bar_string(status):
     p = min(max(p, 0), 100)
     cFull = p // 8
     p_str = ' ' * cFull
-    p_str += '⚡' * (12 - cFull)
-    p_str = f"  {p_str} "
+    p_str += ' ' * (12 - cFull)
+    p_str = f"  {p_str}⚡"
     return p_str
 
 def get_readable_message():
     with download_dict_lock:
-        msg = ""
+        msg = f"Bro <b>{chatid}</b> 𝗗𝗿𝗶𝗻𝗸𝗶𝗻𝗴 𝘀𝗼𝗺𝗲 𝗖𝗼𝗳𝗳𝗲𝗲 ☕️ 𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲 𝗜𝗻 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
