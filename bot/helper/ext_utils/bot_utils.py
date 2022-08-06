@@ -340,8 +340,8 @@ def bot_sys_stats():
                 num_split += 1
     stats = f"""
   {currentTime}\n
-CPU - {progress_bar(cpu)} 
-RAM - {progress_bar(mem_p)} \n
+CPU  {progress_bar(cpu)} 
+RAM  {progress_bar(mem_p)} \n
 USED - {used} ⥄ SPACE -{free} 
 SENT - {sent} ⥄ RECV - {recv}\n
 𝗗𝗨𝗠𝗕 - 𝗟⚡️𝗘𝗖𝗛 
