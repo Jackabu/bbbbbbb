@@ -142,8 +142,8 @@ def get_readable_message():
                 globals()['COUNT'] -= STATUS_LIMIT
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
-            msg += f"\n<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
-            msg += f"\n<b>⚡️ </b> <i>{download.status()}</i>\n<b>Connected - </b> {download.eng()}"
+            msg += f"\n\n<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
+            msg += f"\n\n<b>⚡️ </b> <i>{download.status()}</i>\n\n<b>Connected - </b> {download.eng()}"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
@@ -151,14 +151,14 @@ def get_readable_message():
             ]:
                 msg += f"\n{get_progress_bar_string(download)} {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_CLONING:
-                    msg += f"\n<b>Cloned </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                    msg += f"\n\n<b>Cloned </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
                     msg += f"\n<b>Receiving - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 else:
                     msg += f"\n<b>Sending - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n<b>Performance - </b> {download.speed()}  <b>ETA - </b> {download.eta()}"
+                msg += f"\n\n<b>Performance - </b> {download.speed()}  <b>ETA - </b> {download.eta()}"
                 try:
-                    msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
+                    msg += f"\n\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
                 except:
                     pass
                 try:
@@ -175,7 +175,7 @@ def get_readable_message():
                 else:
                     msg += f'\n<b>Request By </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
                 msg += f"\n<b>Bot Rest - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
-                msg += f"\n<b>⦿ </b>{download.size()}"
+                msg += f"\n\n<b>⦿ </b>{download.size()}"
             msg += " "
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
