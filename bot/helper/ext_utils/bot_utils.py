@@ -33,15 +33,15 @@ class MirrorStatus:
     STATUS_CHECKING = "𝗦𝗲𝗮𝗿𝗰𝗵𝗶𝗻𝗴 𝗙𝗶𝗹𝗲"
 
 class EngineStatus:
-    STATUS_ARIA = "Quad9 Engine"
-    STATUS_GDRIVE = "Google AI Engine"
-    STATUS_MEGA = "Mega Bit Engine"
-    STATUS_QB = "utorrent Engine"
-    STATUS_TG = "Cloudflare Engine"
-    STATUS_YT = "YouTube Engine"
-    STATUS_EXT = "Java Engine"
-    STATUS_SPLIT = "Phython Engine"
-    STATUS_ZIP = "Java Engine"
+    STATUS_ARIA = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙌𝙪𝙖𝙙-9 𝙀𝙂𝙉""
+    STATUS_GDRIVE = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙂𝙤𝙤𝙜𝙡𝙚 𝙀𝙂𝙉"
+    STATUS_MEGA = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙈𝙚𝙜𝙖 𝘽𝙞𝙩 𝙀𝙂𝙉"
+    STATUS_QB = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙐𝙩-𝘽𝙞𝙩 𝙀𝙂𝙉"
+    STATUS_TG = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙂𝙞𝙩𝙝𝙪𝙗 𝙀𝙂𝙉"
+    STATUS_YT = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙔𝙤𝙪𝙏𝙪𝙗𝙚 𝙀𝙂𝙉"
+    STATUS_EXT = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙅𝙖𝙫𝙖 𝙀𝙂𝙉"
+    STATUS_SPLIT = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙋𝙝𝙮𝙩𝙝𝙤𝙣 𝙀𝙂𝙉"
+    STATUS_ZIP = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙅𝙖𝙫𝙖 𝙀𝙂𝙉"
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -133,7 +133,8 @@ def progress_bar(percentage):
 
 def get_readable_message():
     with download_dict_lock:
-        msg = f"𝗗𝗿𝗶𝗻𝗸 𝘀𝗼𝗺𝗲 𝗖𝗼𝗳𝗳𝗲𝗲 ☕️ 𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲 𝗜𝗻 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴"
+        msg = f"™ 𝗗𝗨𝗠𝗕 - 𝗟⚡️𝗘𝗖𝗛"
+        msg = f"𝘎𝘰 𝘋𝘳𝘪𝘯𝘬 𝘴𝘰𝘮𝘦 ☕️ 𝘉𝘳𝘰  𝘠𝘰𝘶𝘳𝘦 𝘍𝘪𝘭𝘦 𝘐𝘯 𝘗𝘳𝘰𝘤𝘦𝘴𝘴𝘪𝘯𝘨"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
@@ -143,22 +144,22 @@ def get_readable_message():
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
             msg += f"\n\n<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
-            msg += f"\n\n<b>⚡️ </b> <i>{download.status()}</i>\n\n<b>Connected - </b> {download.eng()}"
+            msg += f"\n\n<b>⚡️ </b> <i>{download.status()}</i>\n<b>⚡️ </b> {download.eng()}"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
                 MirrorStatus.STATUS_SPLITTING,
             ]:
-                msg += f"\n{get_progress_bar_string(download)} {download.progress()}"
+                msg += f"\n\n{get_progress_bar_string(download)} {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_CLONING:
                     msg += f"\n\n<b>Cloned </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
                     msg += f"\n<b>Receiving - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 else:
                     msg += f"\n<b>Sending - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n\n<b>Performance - </b> {download.speed()}  <b>ETA - </b> {download.eta()}"
+                msg += f"\n<b>Performance - </b> {download.speed()} <b>IT - </b> {download.eta()}"
                 try:
-                    msg += f"\n\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
+                    msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
                 except:
                     pass
                 try:
@@ -173,7 +174,7 @@ def get_readable_message():
                     except:
                         pass
                 else:
-                    msg += f'\n<b>Request By </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
+                    msg += f'\n\n<b>Request By </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
                 msg += f"\n<b>Bot Rest - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n\n<b>⦿ </b>{download.size()}"
             msg += " "
