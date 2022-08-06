@@ -33,7 +33,7 @@ class MirrorStatus:
     STATUS_CHECKING = "𝗦𝗲𝗮𝗿𝗰𝗵𝗶𝗻𝗴 𝗙𝗶𝗹𝗲"
 
 class EngineStatus:
-    STATUS_ARIA = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙌𝙪𝙖𝙙-9 𝙀𝙂𝙉""
+    STATUS_ARIA = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙌𝙪𝙖𝙙-9 𝙀𝙂𝙉"
     STATUS_GDRIVE = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙂𝙤𝙤𝙜𝙡𝙚 𝙀𝙂𝙉"
     STATUS_MEGA = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙈𝙚𝙜𝙖 𝘽𝙞𝙩 𝙀𝙂𝙉"
     STATUS_QB = "𝘾𝙤𝙣𝙣𝙚𝙘𝙩𝙚𝙙 𝙐𝙩-𝘽𝙞𝙩 𝙀𝙂𝙉"
