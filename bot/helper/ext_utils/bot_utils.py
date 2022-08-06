@@ -113,7 +113,7 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 14
-    p_str = '█' * cFull
+    p_str = ' █' * cFull
     p_str += ' ' * (12 - cFull)
     p_str = f"⚡ {p_str} "
     return p_str
@@ -153,17 +153,17 @@ def get_readable_message():
                 if download.status() == MirrorStatus.STATUS_CLONING:
                     msg += f"\n\n<b>Cloned </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
-                    msg += f"\n<b>⚡️𝙍𝙚𝙘𝙚𝙞𝙫𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                    msg += f"\n<b>⚡️ 𝙍𝙚𝙘𝙚𝙞𝙫𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 else:
-                    msg += f"\n<b>⚡️𝙎𝙚𝙣𝙙𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n<b>𝙋𝙧𝙤 - </b> {download.speed()}"
+                    msg += f"\n<b>⚡️ 𝙎𝙚𝙣𝙙𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                msg += f"\n\n<b>𝙋𝙧𝙤 - </b> {download.speed()}"
                 msg += f"\n<b>𝙄𝙏 - </b> {download.eta()}"
                 try:
-                    msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
+                    msg += f"\n<b> Need For Speed SS - </b> {download.aria_download().num_seeders}"
                 except:
                     pass
                 try:
-                    msg += f"\n<b>Need For Speed SS - </b> {download.torrent_info().num_seeds}" \
+                    msg += f"\n<b> Need For Speed SS - </b> {download.torrent_info().num_seeds}" \
                            f" - <b>LS - </b> {download.torrent_info().num_leechs}"
                 except:
                     pass
@@ -174,7 +174,7 @@ def get_readable_message():
                     except:
                         pass
                 else:
-                    msg += f'\n\n<b>Request By </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
+                    msg += f'\n\n<b>𝙍𝙚𝙦𝙪𝙚𝙨𝙩 𝘽𝙮 </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
                 msg += f"\n<b>𝘽𝙤𝙩 𝙍𝙚𝙨𝙩 - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n\n<b>⦿ </b>{download.size()}"
             msg += " "
