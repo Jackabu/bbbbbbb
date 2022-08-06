@@ -113,9 +113,9 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = '▆' * cFull
+    p_str = ' ' * cFull
     p_str += ' ' * (12 - cFull)
-    p_str = f"⚡ {p_str} "
+    p_str = f"  {p_str}⚡"
     return p_str
 
 def progress_bar(percentage):
@@ -133,7 +133,7 @@ def progress_bar(percentage):
 
 def get_readable_message():
     with download_dict_lock:
-        msg = f"Drink Coffee ☕️ Your File In Processing"
+        msg = f"𝗗𝗿𝗶𝗻𝗸𝗶𝗻𝗴 𝘀𝗼𝗺𝗲 𝗖𝗼𝗳𝗳𝗲𝗲 ☕️ 𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲 𝗜𝗻 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
@@ -158,8 +158,7 @@ def get_readable_message():
                     msg += f"\n<b>Sending - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 msg += f"\n<b>Performance - </b> {download.speed()}  <b>ETA - </b> {download.eta()}"
                 try:
-                    msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}" \
-                           f" | <b>PS - </b> {download.aria_download().connections}"
+                    msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
                 except:
                     pass
                 try:
@@ -178,6 +177,25 @@ def get_readable_message():
                 msg += f"\n<b>Bot Rest - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n<b>⦿ </b>{download.size()}"
             msg += "\n\n"
+            if STATUS_LIMIT is not None and index == STATUS_LIMIT:
+                break
+        bmsg = f" "
+        bmsg += f" "
+        dlspeed_bytes = 0
+        upspeed_bytes = 0
+        for download in list(download_dict.values()):
+            spd = download.speed()
+            if download.status() == MirrorStatus.STATUS_DOWNLOADING:
+                if 'K' in spd:
+                    dlspeed_bytes += float(spd.split('K')[0]) * 1024
+                elif 'M' in spd:
+                    dlspeed_bytes += float(spd.split('M')[0]) * 1048576
+            elif download.status() == MirrorStatus.STATUS_UPLOADING:
+                if 'KB/s' in spd:
+                    upspeed_bytes += float(spd.split('K')[0]) * 1024
+                elif 'MB/s' in spd:
+                    upspeed_bytes += float(spd.split('M')[0]) * 1048576
+        bmsg += f"\n<b>SD - </b> {get_readable_file_size(dlspeed_bytes)}/s ⥄ <b>RC - </b> {get_readable_file_size(upspeed_bytes)}/s"
         buttons = ButtonMaker()
         buttons.sbutton("A PROJECT BY J∆CK WITH ❤️", str(FOUR))
         sbutton = InlineKeyboardMarkup(buttons.build_menu(1))
