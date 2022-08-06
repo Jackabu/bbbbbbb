@@ -159,11 +159,11 @@ def get_readable_message():
                 msg += f"\n\n<b>𝙋𝙧𝙤 ⥄ </b> {download.speed()}"
                 msg += f"\n<b>𝙄𝙏 ⥄ </b> {download.eta()}"
                 try:
-                    msg += f"\n<b> Need For Speed SS ⥱ </b> {download.aria_download().num_seeders}"
+                    msg += f"\n<b>𝙉𝙚𝙚𝙙 𝙁𝙤𝙧 𝙎𝙥𝙚𝙚𝙙 𝙎𝙎 ⥱ </b> {download.aria_download().num_seeders}"
                 except:
                     pass
                 try:
-                    msg += f"\n<b> Need For Speed SS ⥱ </b> {download.torrent_info().num_seeds}" \
+                    msg += f"\n<b>𝙉𝙚𝙚𝙙 𝙁𝙤𝙧 𝙎𝙥𝙚𝙚𝙙 𝙎𝙎 ⥱ </b> {download.torrent_info().num_seeds}" \
                            f" ⥄ <b>LS ⥱ </b> {download.torrent_info().num_leechs}"
                 except:
                     pass
