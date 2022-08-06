@@ -414,7 +414,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
         return
     mesg = message.text.split('\n')
     message_args = mesg[0].split(' ', maxsplit=1)
-    name_args = mesg[0].split(' ', maxsplit=1)
+    name_args = mesg[0].split('add', maxsplit=1)
     qbitsel = False
     is_gdtot = False
     try:
@@ -426,19 +426,19 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
         elif link.isdigit():
             multi = int(link)
             raise IndexError
-        if link.startswith(("|", "pswd: ")):
+        if link.startswith(("add", "pas: ")):
             raise IndexError
     except:
         link = ''
     try:
         name = name_args[1]
-        name = name.split(' pswd: ')[0]
+        name = name.split(' pas: ')[0]
         name = name.strip()
     except:
         name = ''
-    link = re_split(r"pswd:| \|", link)[0]
+    link = re_split(r"pas:add \|", link)[0]
     link = link.strip()
-    pswdMsg = mesg[0].split(' pswd: ')
+    pswdMsg = mesg[0].split(' pas: ')
     if len(pswdMsg) > 1:
         pswd = pswdMsg[1]
 
@@ -488,13 +488,13 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
                 link = file.get_file().file_path
 
     if not is_url(link) and not is_magnet(link) and not ospath.exists(link):
-        help_msg = "<b> Connected To Dev @Jackssmit IF You Dont Now </b>\n"
+        help_msg = "\n<b> Connected To Dev @Jackssmit IF You Dont Now </b>"
         help_msg = "<b>Send link along with command line:</b>"
-        help_msg += "\n<code>/command</code> {link} |newname pswd: xx [zip/unzip]"
+        help_msg += "\n<code>/command</code> {link} add newname pas: xx [zip/unzip]"
         help_msg += "\n\n<b>By replying to link or file:</b>"
-        help_msg += "\n<code>/command</code> |newname pswd: xx [zip/unzip]"
+        help_msg += "\n<code>/command</code> add newname pas: xx [zip/unzip]"
         help_msg += "\n\n<b>Direct link authorization:</b>"
-        help_msg += "\n<code>/command</code> {link} |newname pswd: xx\nusername\npassword"
+        help_msg += "\n<code>/command</code> {link} add newname pas: xx\nusername\npassword"
         help_msg += "\n\n<b>Qbittorrent selection:</b>"
         help_msg += "\n<code>/qbcommand</code> <b>s</b> {link} or by replying to {file/link}"
         help_msg += "\n\n<b>Multi links only by replying to first link or file:</b>"
