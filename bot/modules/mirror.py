@@ -414,7 +414,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
         return
     mesg = message.text.split('\n')
     message_args = mesg[0].split(' ', maxsplit=1)
-    name_args = mesg[0].split('|', maxsplit=1)
+    name_args = mesg[0].split(' ', maxsplit=1)
     qbitsel = False
     is_gdtot = False
     try:
@@ -488,7 +488,8 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
                 link = file.get_file().file_path
 
     if not is_url(link) and not is_magnet(link) and not ospath.exists(link):
-        help_msg = "<b> Connected To Dev @Jackssmit IF You Dont Now  </b>"
+        help_msg = "<b> Connected To Dev @Jackssmit IF You Dont Now </b>\n"
+        help_msg = "<b>Send link along with command line:</b>"
         help_msg += "\n<code>/command</code> {link} |newname pswd: xx [zip/unzip]"
         help_msg += "\n\n<b>By replying to link or file:</b>"
         help_msg += "\n<code>/command</code> |newname pswd: xx [zip/unzip]"
@@ -529,7 +530,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
         if MEGA_KEY is not None:
             Thread(target=MegaDownloader(listener).add_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/')).start()
         else:
-            sendMessage('MEGA_API_KEY not Provided!', bot, message)
+            sendMessage('BRO I Need Premium Account For My Mega Links  If You Are Interested Then You Can Donate Mega Account Send (D MEGA) To @Jackssmit', bot, message)
     elif isQbit:
         Thread(target=QbDownloader(listener).add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', qbitsel)).start()
     else:
