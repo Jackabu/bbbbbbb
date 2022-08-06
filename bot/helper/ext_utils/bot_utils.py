@@ -112,10 +112,10 @@ def get_progress_bar_string(status):
     total = status.size_raw() / 8
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
-    cFull = p // 8
-    p_str = ' ' * cFull
+    cFull = p // 1
+    p_str = '█' * cFull
     p_str += ' ' * (12 - cFull)
-    p_str = f"  {p_str}⚡"
+    p_str = f"⚡{p_str} "
     return p_str
 
 def progress_bar(percentage):
@@ -133,8 +133,7 @@ def progress_bar(percentage):
 
 def get_readable_message():
     with download_dict_lock:
-        msg = f"™ 𝗗𝗨𝗠𝗕 - 𝗟⚡️𝗘𝗖𝗛"
-        msg = f"𝘎𝘰 𝘋𝘳𝘪𝘯𝘬 𝘴𝘰𝘮𝘦 ☕️ 𝘉𝘳𝘰  𝘠𝘰𝘶𝘳𝘦 𝘍𝘪𝘭𝘦 𝘐𝘯 𝘗𝘳𝘰𝘤𝘦𝘴𝘴𝘪𝘯𝘨"
+        msg = f"𝘌𝘷𝘦𝘳𝘺 𝘔𝘰𝘮𝘦𝘯𝘵 𝘐𝘴 𝘢 𝘍𝘳𝘦𝘴𝘩 𝘉𝘦𝘨𝘪𝘯𝘯𝘪𝘯𝘨"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
