@@ -156,7 +156,8 @@ def get_readable_message():
                     msg += f"\n<b>⚡️𝙍𝙚𝙘𝙚𝙞𝙫𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 else:
                     msg += f"\n<b>⚡️𝙎𝙚𝙣𝙙𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n<b>𝙋𝙧𝙤 - </b> {download.speed()} <b>IT - </b> {download.eta()}"
+                msg += f"\n<b>𝙋𝙧𝙤 - </b> {download.speed()}"
+                msg += f"\n<b>𝙄𝙏 - </b> {download.eta()}"
                 try:
                     msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
                 except:
