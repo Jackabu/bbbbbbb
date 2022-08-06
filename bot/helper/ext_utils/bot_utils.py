@@ -113,14 +113,14 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = ' ' * cFull
+    p_str = '▆' * cFull
     p_str += ' ' * (12 - cFull)
-    p_str = f"  {p_str}⚡"
+    p_str = f"⚡ {p_str} "
     return p_str
 
 def progress_bar(percentage):
-    p_used = '⬢'
-    p_total = '⬡'
+    p_used = '●'
+    p_total = '○'
     if isinstance(percentage, str):
         return 'NaN'
     try:
@@ -133,7 +133,7 @@ def progress_bar(percentage):
 
 def get_readable_message():
     with download_dict_lock:
-        msg = f"𝗗𝗿𝗶𝗻𝗸𝗶𝗻𝗴 𝘀𝗼𝗺𝗲 𝗖𝗼𝗳𝗳𝗲𝗲 ☕️ 𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲 𝗜𝗻 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴"
+        msg = f"Drink Coffee ☕️ Your File In Processing"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
@@ -142,7 +142,7 @@ def get_readable_message():
                 globals()['COUNT'] -= STATUS_LIMIT
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
-            msg += f"<b>×͜× </b> <code>{escape(str(download.name()))}</code>"
+            msg += f"<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
             msg += f"\n<b>⚡️ </b> <i>{download.status()}</i>\n<b>Connected - </b> {download.eng()}"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
@@ -178,25 +178,6 @@ def get_readable_message():
                 msg += f"\n<b>Bot Rest - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n<b>⦿ </b>{download.size()}"
             msg += "\n\n"
-            if STATUS_LIMIT is not None and index == STATUS_LIMIT:
-                break
-        bmsg = f"<b>CPU - </b> {cpu_percent()} ⥄ <b>SPACE - </b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
-        bmsg += f"\n<b>RAM - </b> {virtual_memory().percent} ⥄ <b>UT - </b> {get_readable_time(time() - botStartTime)}"
-        dlspeed_bytes = 0
-        upspeed_bytes = 0
-        for download in list(download_dict.values()):
-            spd = download.speed()
-            if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                if 'K' in spd:
-                    dlspeed_bytes += float(spd.split('K')[0]) * 1024
-                elif 'M' in spd:
-                    dlspeed_bytes += float(spd.split('M')[0]) * 1048576
-            elif download.status() == MirrorStatus.STATUS_UPLOADING:
-                if 'KB/s' in spd:
-                    upspeed_bytes += float(spd.split('K')[0]) * 1024
-                elif 'MB/s' in spd:
-                    upspeed_bytes += float(spd.split('M')[0]) * 1048576
-        bmsg += f"\n<b>SD - </b> {get_readable_file_size(dlspeed_bytes)}/s ⥄ <b>RC - </b> {get_readable_file_size(upspeed_bytes)}/s"
         buttons = ButtonMaker()
         buttons.sbutton("A PROJECT BY J∆CK WITH ❤️", str(FOUR))
         sbutton = InlineKeyboardMarkup(buttons.build_menu(1))
