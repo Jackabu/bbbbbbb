@@ -112,10 +112,10 @@ def get_progress_bar_string(status):
     total = status.size_raw() / 8
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
-    cFull = p // 1
+    cFull = p // 14
     p_str = '█' * cFull
     p_str += ' ' * (12 - cFull)
-    p_str = f"⚡{p_str} "
+    p_str = f"⚡ {p_str} "
     return p_str
 
 def progress_bar(percentage):
@@ -153,10 +153,10 @@ def get_readable_message():
                 if download.status() == MirrorStatus.STATUS_CLONING:
                     msg += f"\n\n<b>Cloned </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
-                    msg += f"\n<b>Receiving - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                    msg += f"\n<b>⚡️𝙍𝙚𝙘𝙚𝙞𝙫𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 else:
-                    msg += f"\n<b>Sending - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n<b>Performance - </b> {download.speed()} <b>IT - </b> {download.eta()}"
+                    msg += f"\n<b>⚡️𝙎𝙚𝙣𝙙𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                msg += f"\n<b>𝙋𝙧𝙤 - </b> {download.speed()} <b>IT - </b> {download.eta()}"
                 try:
                     msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}"
                 except:
@@ -169,12 +169,12 @@ def get_readable_message():
                 if download.message.chat.type != 'private':
                     try:
                         chatid = str(download.message.chat.id)[4:]
-                        msg += f'\n<b>Brother </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">{download.message.from_user.first_name}</a>  <b>ID </b> <code>{download.message.from_user.id}</code>'
+                        msg += f'\n<b>𝘽𝙧𝙤𝙩𝙝𝙚𝙧 </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">{download.message.from_user.first_name}</a>  <b>ID </b> <code>{download.message.from_user.id}</code>'
                     except:
                         pass
                 else:
                     msg += f'\n\n<b>Request By </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
-                msg += f"\n<b>Bot Rest - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                msg += f"\n<b>𝘽𝙤𝙩 𝙍𝙚𝙨𝙩 - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n\n<b>⦿ </b>{download.size()}"
             msg += " "
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
