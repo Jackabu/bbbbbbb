@@ -113,9 +113,9 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 14
-    p_str = '▰' * cFull
+    p_str = '⬤' * cFull
     p_str += ' ' * (12 - cFull)
-    p_str = f"▰{p_str} "
+    p_str = f"✘ {p_str} "
     return p_str
 
 def progress_bar(percentage):
@@ -342,9 +342,11 @@ def bot_sys_stats():
   {currentTime}\n
 CPU - {progress_bar(cpu)} 
 RAM - {progress_bar(mem_p)} \n
-USED - {used} ⥄ SPACE -{free} 
-SENT - {sent} ⥄ RECV - {recv}\n
-𝗗𝗨𝗠𝗕 - 𝗟⚡️𝗘𝗖𝗛 
+USED - {progress_bar(used)} 
+SPACE -{progress_bar(free)} 
+SENT - {progress_bar(sent)} 
+RECV - {progress_bar(recv)}\n
+𝗗𝗨𝗠𝗕 - 𝗟⚡️𝗘𝗖𝗛 \n
 SD - {num_active} ⥃ RC  - {num_upload} ⥃ SPLIT - {num_split}
 ZIP  - {num_archi} ⥃ UNZIP - {num_extract} ⥃ TOTAL - {tasks} 
 """
