@@ -186,6 +186,10 @@ def get_readable_message():
                     upspeed_bytes += float(spd.split('M')[0]) * 1048576
         bmsg += f"\n<b>SD - </b> {get_readable_file_size(dlspeed_bytes)}/s ⥄ <b>RC - </b> {get_readable_file_size(upspeed_bytes)}/s"
         buttons = ButtonMaker()
+        buttons.sbutton("Refresh", str(ONE))
+        buttons.sbutton("Close", str(TWO))
+        buttons.sbutton("Statistics", str(THREE))
+        sbutton = InlineKeyboardMarkup(buttons.build_menu(2))
         buttons.sbutton("A PROJECT BY J∆CK WITH ❤️", str(FOUR))
         sbutton = InlineKeyboardMarkup(buttons.build_menu(1))
         if STATUS_LIMIT is not None and tasks > STATUS_LIMIT:
