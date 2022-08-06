@@ -113,9 +113,9 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 14
-    p_str = ' █' * cFull
+    p_str = '▅' * cFull
     p_str += ' ' * (12 - cFull)
-    p_str = f"⚡ {p_str} "
+    p_str = f"⚡{p_str} "
     return p_str
 
 def progress_bar(percentage):
@@ -143,27 +143,27 @@ def get_readable_message():
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
             msg += f"\n\n<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
-            msg += f"\n\n<b>⚡️ </b> <i>{download.status()}</i>\n<b>⚡️ </b> {download.eng()}"
+            msg += f"\n\n<b>⚡️</b> <i>{download.status()}</i>\n<b>⚡️</b> {download.eng()}"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
                 MirrorStatus.STATUS_SPLITTING,
             ]:
-                msg += f"\n{get_progress_bar_string(download)} {download.progress()}"
+                msg += f"\n\n{get_progress_bar_string(download)} {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_CLONING:
-                    msg += f"\n\n<b>Cloned </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                    msg += f"\n\n<b>𝘾𝙡𝙤𝙣𝙚𝙙 </b> {get_readable_file_size(download.processed_bytes())} ⥱ {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
-                    msg += f"\n<b>⚡️ 𝙍𝙚𝙘𝙚𝙞𝙫𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                    msg += f"\n\n<b>⚡️𝙍𝙚𝙘𝙚𝙞𝙫𝙞𝙣𝙜 ⥄ </b> {get_readable_file_size(download.processed_bytes())} ⥱ {download.size()}"
                 else:
-                    msg += f"\n<b>⚡️ 𝙎𝙚𝙣𝙙𝙞𝙣𝙜 - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n\n<b>𝙋𝙧𝙤 - </b> {download.speed()}"
-                msg += f"\n<b>𝙄𝙏 - </b> {download.eta()}"
+                    msg += f"\n\n<b>⚡️𝙎𝙚𝙣𝙙𝙞𝙣𝙜 ⥄ </b> {get_readable_file_size(download.processed_bytes())} ⥱ {download.size()}"
+                msg += f"\n\n<b>𝙋𝙧𝙤 ⥄ </b> {download.speed()}"
+                msg += f"\n<b>𝙄𝙏 ⥄ </b> {download.eta()}"
                 try:
-                    msg += f"\n<b> Need For Speed SS - </b> {download.aria_download().num_seeders}"
+                    msg += f"\n<b> Need For Speed SS ⥱ </b> {download.aria_download().num_seeders}"
                 except:
                     pass
                 try:
-                    msg += f"\n<b> Need For Speed SS - </b> {download.torrent_info().num_seeds}" \
+                    msg += f"\n<b> Need For Speed SS ⥱ </b> {download.torrent_info().num_seeds}" \
                            f" - <b>LS - </b> {download.torrent_info().num_leechs}"
                 except:
                     pass
@@ -175,7 +175,7 @@ def get_readable_message():
                         pass
                 else:
                     msg += f'\n\n<b>𝙍𝙚𝙦𝙪𝙚𝙨𝙩 𝘽𝙮 </b> ️<code>{download.message.from_user.first_name}</code>  <b>ID </b> <code>{download.message.from_user.id}</code>'
-                msg += f"\n<b>𝘽𝙤𝙩 𝙍𝙚𝙨𝙩 - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                msg += f"\n<b>𝘽𝙤𝙩 𝙍𝙚𝙨𝙩 ⥄ </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n\n<b>⦿ </b>{download.size()}"
             msg += " "
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
