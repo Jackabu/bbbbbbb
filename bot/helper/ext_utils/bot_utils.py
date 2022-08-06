@@ -3,7 +3,6 @@ from threading import Thread, Event
 from time import time
 from math import ceil
 from html import escape
-from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 from requests import head as rhead
 from urllib.request import urlopen
 from telegram import InlineKeyboardMarkup
@@ -144,7 +143,6 @@ def get_readable_message():
                 else:
                     msg += f"\n<b>Sending - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 msg += f"\n<b>Performance - </b> {download.speed()}  <b>ETA - </b> {download.eta()}"
-                msg += f"\n<b>Elapsed - </b>{get_readable_time(time() - download.message.date.timestamp())}"
                 try:
                     msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}" \
                            f" | <b>PS - </b> {download.aria_download().connections}"
