@@ -9,7 +9,7 @@ from urllib.request import urlopen
 from telegram import InlineKeyboardMarkup
 from telegram.ext import CallbackQueryHandler
 from bot.helper.telegram_helper.bot_commands import BotCommands
-from bot import download_dict, download_dict_lock, STATUS_LIMIT, dispatcher
+from bot import download_dict, download_dict_lock, STATUS_LIMIT, botStartTime, DOWNLOAD_DIR, dispatcher
 from bot.helper.telegram_helper.button_build import ButtonMaker
 
 MAGNET_REGEX = r"magnet:\?xt=urn:btih:[a-zA-Z0-9]*"
@@ -113,14 +113,14 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = '▆' * cFull
-    p_str += ' ' * (12 - cFull)
-    p_str = f"⚡ {p_str} "
+    p_str = ' ' * cFull
+    p_str += '⚡️' * (12 - cFull)
+    p_str = f"  {p_str} "
     return p_str
 
 def get_readable_message():
     with download_dict_lock:
-        msg = ""
+        msg = f"™ <b>{TITLE_NAME}</b>"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
@@ -129,7 +129,7 @@ def get_readable_message():
                 globals()['COUNT'] -= STATUS_LIMIT
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
-            msg += f"<b>×͜× </b> <code>{escape(str(download.name()))}</code>"
+            msg += f"<b>⬤ </b> <code>{escape(str(download.name()))}</code>"
             msg += f"\n<b>⚡️ </b> <i>{download.status()}</i>\n<b>Connected - </b> {download.eng()}"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
@@ -144,6 +144,7 @@ def get_readable_message():
                 else:
                     msg += f"\n<b>Sending - </b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 msg += f"\n<b>Performance - </b> {download.speed()}  <b>ETA - </b> {download.eta()}"
+                msg += f"\n<b>Elapsed - </b>{get_readable_time(time() - download.message.date.timestamp())}"
                 try:
                     msg += f"\n<b>Need For Speed SS - </b> {download.aria_download().num_seeders}" \
                            f" | <b>PS - </b> {download.aria_download().connections}"
@@ -165,7 +166,24 @@ def get_readable_message():
                 msg += f"\n<b>Bot Rest - </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
                 msg += f"\n<b>⦿ </b>{download.size()}"
             msg += "\n\n"
-
+            if STATUS_LIMIT is not None and index == STATUS_LIMIT:
+                break
+        bmsg = f"<b>CPU - </b> {cpu_percent()} ⥄ <b>SPACE - </b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
+        bmsg += f"\n<b>RAM - </b> {virtual_memory().percent} ⥄ <b>UT - </b> {get_readable_time(time() - botStartTime)}"
+        dlspeed_bytes = 0
+        upspeed_bytes = 0
+        for download in list(download_dict.values()):
+            spd = download.speed()
+            if download.status() == MirrorStatus.STATUS_DOWNLOADING:
+                if 'K' in spd:
+                    dlspeed_bytes += float(spd.split('K')[0]) * 1024
+                elif 'M' in spd:
+                    dlspeed_bytes += float(spd.split('M')[0]) * 1048576
+            elif download.status() == MirrorStatus.STATUS_UPLOADING:
+                if 'KB/s' in spd:
+                    upspeed_bytes += float(spd.split('K')[0]) * 1024
+                elif 'MB/s' in spd:
+                    upspeed_bytes += float(spd.split('M')[0]) * 1048576
         bmsg += f"\n<b>SD - </b> {get_readable_file_size(dlspeed_bytes)}/s ⥄ <b>RC - </b> {get_readable_file_size(upspeed_bytes)}/s"
         buttons = ButtonMaker()
         buttons.sbutton("A PROJECT BY J∆CK WITH ❤️", str(FOUR))
@@ -317,6 +335,12 @@ SENT - {sent} ⥄ RECV - {recv}\n
 SD - {num_active} ⥃ RC  - {num_upload} ⥃ SPLIT - {num_split}
 ZIP  - {num_archi} ⥃ UNZIP - {num_extract} ⥃ TOTAL - {tasks} 
 """
+
+dispatcher.add_handler(CallbackQueryHandler(refresh, pattern=f"^{str(ONE)}$"))
+dispatcher.add_handler(CallbackQueryHandler(close, pattern=f"^{str(TWO)}$"))
+dispatcher.add_handler(CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$"))
+
+
     return stats
 dispatcher.add_handler(
     CallbackQueryHandler(pop_up_stats, pattern="^" + str(FOUR) + "$")
