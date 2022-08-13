@@ -42,22 +42,22 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
         if link.isdigit():
             multi = int(link)
             raise IndexError
-        elif link.startswith(("|", "pswd:", "args:")):
+        elif link.startswith(("add", "pas:", "args:")):
             raise IndexError
     except:
         link = ''
     try:
-        name_arg = mssg.split('|', maxsplit=1)
+        name_arg = mssg.split('add', maxsplit=1)
         if 'args: ' in name_arg[0]:
             raise IndexError
         else:
             name = name_arg[1]
-        name = re_split(r' pswd: | args: ', name)[0]
+        name = re_split(r' pas: add args: ', name)[0]
         name = name.strip()
     except:
         name = ''
     try:
-        pswd = mssg.split(' pswd: ')[1]
+        pswd = mssg.split(' pas: ')[1]
         pswd = pswd.split(' args: ')[0]
     except:
         pswd = None
@@ -83,14 +83,14 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
 
     if not is_url(link):
         help_msg = "<b>Send link along with command line:</b>"
-        help_msg += "\n<code>/command</code> {link} |newname pswd: mypassword [zip] args: x:y|x1:y1"
+        help_msg += "\n<code>/command</code> {link} addnewname pas: mypassword [zip] args: x:y|x1:y1"
         help_msg += "\n\n<b>By replying to link:</b>"
-        help_msg += "\n<code>/command</code> |newname pswd: mypassword [zip] args: x:y|x1:y1"
+        help_msg += "\n<code>/command</code> addnewname pas: mypassword [zip] args: x:y|x1:y1"
         help_msg += "\n\n<b>Args Example:</b> args: playliststart:^10|match_filter:season_number=18|matchtitle:S1"
         help_msg += "\n\n<b>NOTE:</b> Add `^` before integer, some values must be integer and some string."
         help_msg += " Like playlist_items:10 works with string so no need to add `^` before the number"
         help_msg += " but playlistend works only with integer so you must add `^` before the number like example above."
-        help_msg += "\n\nCheck all arguments from this <a href='https://github.com/yt-dlp/yt-dlp/blob/a3125791c7a5cdf2c8c025b99788bf686edd1a8a/yt_dlp/YoutubeDL.py#L194'>FILE</a>."
+        help_msg += "\n\nReport To Jackssmit <a href='https://t.me/Jackssmit'>Developer</a>."
         msg = sendMessage(help_msg, bot, message)
         Thread(target=auto_delete_upload_message, args=(bot, message, msg)).start()
         return
@@ -106,18 +106,18 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
         msg = str(e).replace('<', ' ').replace('>', ' ')
         return sendMessage(tag + " " + msg, bot, message)
     if 'entries' in result:
-        for i in ['144', '240', '360', '480', '720', '1080', '1440', '2160']:
+        for i in ['144p', '240p', '360p', '480p', '720p', '1080p', '1440p', '2160p X']:
             video_format = f"bv*[height<={i}][ext=mp4]"
             buttons.sbutton(f"{i}-mp4", f"qu {msg_id} {video_format} t")
             video_format = f"bv*[height<={i}][ext=webm]"
             buttons.sbutton(f"{i}-webm", f"qu {msg_id} {video_format} t")
         buttons.sbutton("Audios", f"qu {msg_id} audio t")
-        buttons.sbutton("⚡ Best Videos", f"qu {msg_id} {best_video} t")
-        buttons.sbutton("⚡ Best Audios", f"qu {msg_id} {best_audio} t")
+        buttons.sbutton("Smart Videos", f"qu {msg_id} {best_video} t")
+        buttons.sbutton("Smart Audios", f"qu {msg_id} {best_audio} t")
         buttons.sbutton("Cancel", f"qu {msg_id} cancel")
         YTBUTTONS = InlineKeyboardMarkup(buttons.build_menu(3))
         listener_dict[msg_id] = [listener, user_id, link, name, YTBUTTONS, args]
-        bmsg = sendMarkup('Bro Choose Playlist Videos Quality ', bot, message, YTBUTTONS)
+        bmsg = sendMarkup('𝗔 𝗣𝗥𝗢𝗝𝗘𝗖𝗧 𝗕𝗬 𝗝∆𝗖𝗞 𝗪𝗜𝗧𝗛 ❤️', bot, message, YTBUTTONS)
     else:
         formats = result.get('formats')
         formats_dict = {}
@@ -160,13 +160,11 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
                     buttons.sbutton(str(buttonName), f"qu {msg_id} {video_format}")
                 else:
                     buttons.sbutton(str(_format), f"qu {msg_id} dict {_format}")
-        buttons.sbutton("Audios", f"qu {msg_id} audio")
-        buttons.sbutton("Best Video", f"qu {msg_id} {best_video}")
-        buttons.sbutton("Best Audio", f"qu {msg_id} {best_audio}")
+        buttons.sbutton("Confirm", f"qu {msg_id} {best_video}")
         buttons.sbutton("Cancel", f"qu {msg_id} cancel")
         YTBUTTONS = InlineKeyboardMarkup(buttons.build_menu(2))
         listener_dict[msg_id] = [listener, user_id, link, name, YTBUTTONS, args, formats_dict]
-        bmsg = sendMarkup('Bro Choose Video Quality ', bot, message, YTBUTTONS)
+        bmsg = sendMarkup('𝗔 𝗣𝗥𝗢𝗝𝗘𝗖𝗧 𝗕𝗬 𝗝∆𝗖𝗞 𝗪𝗜𝗧𝗛 ❤️', bot, message, YTBUTTONS)
 
     Thread(target=_auto_cancel, args=(bmsg, msg_id)).start()
     Thread(target=auto_delete_upload_message, args=(bot, message, bmsg)).start()
@@ -207,7 +205,7 @@ def _qual_subbuttons(task_id, qual, msg):
     buttons.sbutton("Back", f"qu {task_id} back")
     buttons.sbutton("Cancel", f"qu {task_id} cancel")
     SUBBUTTONS = InlineKeyboardMarkup(buttons.build_menu(2))
-    editMessage(f"Bro Choose Video Bitrate for <b>{qual}</b> ", msg, SUBBUTTONS)
+    editMessage(f"𝗔 𝗣𝗥𝗢𝗝𝗘𝗖𝗧 𝗕𝗬 𝗝∆𝗖𝗞 𝗪𝗜𝗧𝗛 ❤️ <b>{qual}</b> ", msg, SUBBUTTONS)
 
 def _audio_subbuttons(task_id, msg, playlist=False):
     buttons = ButtonMaker()
@@ -223,7 +221,7 @@ def _audio_subbuttons(task_id, msg, playlist=False):
     buttons.sbutton("Back", f"qu {task_id} back")
     buttons.sbutton("Cancel", f"qu {task_id} cancel")
     SUBBUTTONS = InlineKeyboardMarkup(buttons.build_menu(2))
-    editMessage(f"Choose Audio{i} Bitrate:", msg, SUBBUTTONS)
+    editMessage(f"Bro Choose Audio{i} Bitrate:", msg, SUBBUTTONS)
 
 def select_format(update, context):
     query = update.callback_query
