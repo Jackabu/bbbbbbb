@@ -236,7 +236,7 @@ try:
         raise KeyError
 except:
     MEGA_KEY = None
-    LOGGER.info('MEGA_API_KEY not provided!')
+    LOGGER.info('⚡️bro need prem account if you have then - connect to dev @jackssmit to add prem sdk for you')
 if MEGA_KEY is not None:
     # Start megasdkrest binary
     Popen(["megasdkrest", "--apikey", MEGA_KEY])
