@@ -160,7 +160,9 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
                     buttons.sbutton(str(buttonName), f"qu {msg_id} {video_format}")
                 else:
                     buttons.sbutton(str(_format), f"qu {msg_id} dict {_format}")
+        buttons.sbutton("Audios", f"qu {msg_id} audio")
         buttons.sbutton("Confirm", f"qu {msg_id} {best_video}")
+        buttons.sbutton("Pro Audio", f"qu {msg_id} {best_audio}")
         buttons.sbutton("Cancel", f"qu {msg_id} cancel")
         YTBUTTONS = InlineKeyboardMarkup(buttons.build_menu(2))
         listener_dict[msg_id] = [listener, user_id, link, name, YTBUTTONS, args, formats_dict]
