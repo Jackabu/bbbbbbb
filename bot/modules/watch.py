@@ -19,7 +19,7 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
     user_id = message.from_user.id
     msg_id = message.message_id
     buttons = ButtonMaker()
-    if BOT_PM and message.chat.type != 'private':
+    if BOT_PM and message.chat.type != 'Encrypted':
         try:
             msg1 = f'Added your Requested link to Download\n'
             send = bot.sendMessage(message.from_user.id, text=msg1)
@@ -30,9 +30,9 @@ def _watch(bot, message, isZip=False, isLeech=False, multi=0):
             b_uname = bot_d.username
             uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
             botstart = f"http://t.me/{b_uname}"
-            buttons.buildbutton("Hit Me", f"{botstart}")
-            startwarn = f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\n" \
-                        f"From now on i will give link and leeched files in PM and log channel only"
+            buttons.buildbutton("⚡️Connect - Bot", f"{botstart}")
+            startwarn = f"𝗕𝗿𝗼 {uname},\n\n<b>𝗬𝗼𝘂𝗿𝗲 𝗮𝗱𝗺𝗶𝗻 𝗜𝘀 𝗗𝗲𝗰𝗶𝗱𝗲𝗱 𝘁𝗼 𝗦𝗲𝗻𝗱𝗶𝗻𝗴 𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲𝘀 ⚡️𝗗𝗶𝗿𝗲𝗰𝘁𝗹𝘆 𝗧𝗼 𝗬𝗼𝘂 </b>\n\n" \
+                        f" "
             message = sendMarkup(startwarn, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
             Thread(target=auto_delete_message, args=(bot, message, message)).start()
             return
